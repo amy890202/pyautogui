@@ -1,0 +1,364 @@
+import pyautogui, time
+#
+pyautogui.PAUSE = 0.8#指令間隔 1 秒
+from time import sleep
+import PIL
+
+#切換到桌面點google chrome
+pyautogui.hotkey('win', 'd')
+pyautogui.doubleClick(242,173)
+sleep(1)
+
+#最大化
+pyautogui.click((pyautogui.locateCenterOnScreen('max.png',confidence=0.9)))#,confidence=0.9
+
+#無痕
+pyautogui.click(1896, 65)
+pyautogui.click(1665, 194)
+#進入遊戲
+pyautogui.typewrite('https://www.crazygames.com/game/tower-swap')
+pyautogui.press('enter')
+#
+import pyautogui, time
+
+#交換兩個物件
+def change_in_game(row_index,item1,item2):
+    xloc_o = 690 + 60*item1
+    xloc_n = 690 + 60*item2
+    yloc = 360+60*row_index
+    pyautogui.moveTo(xloc_o, yloc)
+    pyautogui.dragRel(xloc_n-xloc_o, 0, 0.3)
+    pyautogui.click(xloc_n, yloc)
+    sleep(2)
+
+
+#按下play now按鈕
+loc = pyautogui.locateOnScreen('play_now.png')       # 偵測螢幕上是否有與 box.png 相同的圖片，若有 loc 將會被指派相同於圖片的地方的位置，若沒有 loc 會被指派為 None
+print('loc,',loc)
+while loc == None:                              # 如果 loc 是 None (剛剛螢幕上沒找到相同的圖片) / 如果有找到，會直接跳過這個迴圈
+    time.sleep(1)                             # 停 0.1 秒
+    loc = pyautogui.locateCenterOnScreen('play_now.png')
+    print(loc)# 再找一次
+pyautogui.click(loc)
+sleep(2)
+
+
+
+
+#按下play
+loc = pyautogui.locateOnScreen('play.png')       # 偵測螢幕上是否有與 box.png 相同的圖片，若有 loc 將會被指派相同於圖片的地方的位置，若沒有 loc 會被指派為 None
+# print('loc,',loc)
+while loc == None:                              # 如果 loc 是 None (剛剛螢幕上沒找到相同的圖片) / 如果有找到，會直接跳過這個迴圈
+    time.sleep(3)                             # 停 0.1 秒
+    loc = pyautogui.locateCenterOnScreen('play.png')
+    print(loc)# 再找一次
+pyautogui.click(loc)
+
+
+
+#教學過程寫死
+
+sleep(8)
+pyautogui.moveTo(802, 543)
+pyautogui.dragRel(64, 0, 0.3)
+sleep(8)
+pyautogui.click(802, 543)
+sleep(2)
+pyautogui.click(802, 543)
+pyautogui.moveTo(802, 543)
+pyautogui.dragRel(64, 0, 0.3)
+sleep(2)
+pyautogui.click(802, 543)
+sleep(2)
+pyautogui.click(802, 543)
+sleep(2)
+# pyautogui.moveTo(815, 480)
+# pyautogui.dragRel(0, 536-480, 0.3)
+# sleep(2)
+pyautogui.click(802, 543)
+sleep(2)
+pyautogui.moveTo(690+60, 360+60*3)
+pyautogui.dragRel(60, 0, 0.3)
+sleep(2)
+pyautogui.click(802, 543)
+sleep(2)
+pyautogui.click(802, 543)
+sleep(2)
+pyautogui.click(802, 543)
+sleep(2)
+pyautogui.moveTo(988, 360)
+pyautogui.dragRel(0, 60, 0.3)
+sleep(2)
+pyautogui.click(988, 360)
+import random
+
+
+#一直交換到nightfall的提示
+loc = pyautogui.locateCenterOnScreen('nightfall.png')       # 偵測螢幕上是否有與 box.png 相同的圖片，若有 loc 將會被指派相同於圖片的地方的位置，若沒有 loc 會被指派為 None
+while loc == None:                              # 如果 loc 是 None (剛剛螢幕上沒找到相同的圖片) / 如果有找到，會直接跳過這個迴圈
+    rnd = random.randint(0, 5)
+    if(rnd!=5):
+        rnd2 = rnd + 1
+    else:
+        rnd2 = rnd - 1
+    change_in_game(random.randint(0, 5), rnd, rnd2)# 停 0.1 秒
+    loc = pyautogui.locateCenterOnScreen('nightfall.png')
+# for i in range(10):
+#     rnd = random.randint(0, 5)
+#     if (rnd != 5):
+#         rnd2 = rnd + 1
+#     else:
+#         rnd2 = rnd - 1
+#     change_in_game(random.randint(0, 5), rnd, rnd2)  # 停 0.1 秒
+#sleep(2)
+
+pyautogui.click(988, 330)
+#%%
+#一個方格60*60 從660,330~1020,688
+
+#print('1,',pyautogui.locateOnScreen('black.png',confidence=0.8))
+sleep(2)
+from pyautogui import screenshot
+#screenshot(region=(660,330,60,60)).save('pic.png')
+# pic = pyautogui.locateAllOnScreen('pic.png',confidence = 0.6)#,region=(660+60*2, 330, 60*6, 60)
+# print('pic',list(pic))
+
+
+# blue = pyautogui.locateAllOnScreen('blue.png',confidence = 0.9)#,region=(660+60*2, 330, 60*6, 60)
+# print('blue',list(blue))
+
+
+
+
+####
+
+#一個一個物件一行一行識別下去辨識整個盤面
+#用list去設定每個物件的座標
+x_start = 660+60
+y_start = 330+60
+x_list = [x_start+i*60 for i in range(6)]
+print(x_list)
+y_list = [y_start+i*60 for i in range(6)]
+print(y_list)
+column, row = 6, 6
+
+#創一個A空矩陣紀錄識別出的物件
+A = [[0]*row for _ in range(column)]
+sleep(10)
+pyautogui.moveTo(1814,244)
+#用每個物件的screenshot跑一次從第一row到最後一row的locateAllOnScreen，並判斷他的x和y座標，利用A紀錄識別出為該物件的位置
+for row in range(6):
+    for pos in pyautogui.locateAllOnScreen('blue.png',confidence = 0.7,region=(660, 330+60*row, 60*6, 60)):
+        print('b',pos)
+        sleep(1)
+        x_loc = pyautogui.center(pos)[0]
+        for i in range(len(x_list)):
+            if x_loc < x_list[i]:
+                loc_x = i
+                A[row][loc_x]='b'
+                print(row, loc_x)
+                break
+for row in range(6):
+    for pos in pyautogui.locateAllOnScreen('yellow.png',confidence = 0.7,region=(660, 330+60*row, 60*6, 60)):
+        print('y',pos)
+        sleep(1)
+        x_loc = pyautogui.center(pos)[0]
+        for i in range(len(x_list)):
+            if x_loc < x_list[i]:
+                loc_x = i
+                A[row][loc_x]='y'
+                print(row, loc_x)
+                break
+for row in range(6):
+    for pos in pyautogui.locateAllOnScreen('stone.png',confidence = 0.7,region=(660, 330+60*row, 60*6, 60)):
+        print('o',pos)
+        sleep(1)
+        x_loc = pyautogui.center(pos)[0]
+        for i in range(len(x_list)):
+            if x_loc < x_list[i]:
+                loc_x = i
+                A[row][loc_x]='o'
+                print(row, loc_x)
+                break
+for row in range(6):
+    for pos in pyautogui.locateAllOnScreen('castle.png',confidence = 0.7,region=(660, 330+60*row, 60*6, 60)):
+        print('c',pos)
+        sleep(1)
+        x_loc = pyautogui.center(pos)[0]
+        for i in range(len(x_list)):
+            if x_loc < x_list[i]:
+                loc_x = i
+                A[row][loc_x]='c'
+                #print(row, loc_x)
+                break
+for row in range(6):
+    for pos in pyautogui.locateAllOnScreen('box.png',confidence = 0.7,region=(660, 330+60*row, 60*6, 60)):
+        print('t',pos)
+        sleep(1)
+        x_loc = pyautogui.center(pos)[0]
+        for i in range(len(x_list)):
+            if x_loc < x_list[i]:
+                loc_x = i
+                A[row][loc_x]='t'
+                print(row, loc_x)
+                break
+for row in range(6):
+    for pos in pyautogui.locateAllOnScreen('shoot.png',confidence = 0.7,region=(660, 330+60*row, 60*6, 60)):
+        print('s',pos)
+        sleep(1)
+        x_loc = pyautogui.center(pos)[0]
+        for i in range(len(x_list)):
+            if x_loc < x_list[i]:
+                loc_x = i
+                A[row][loc_x]='s'
+                print(row, loc_x)
+                break
+for row in range(6):
+    for pos in pyautogui.locateAllOnScreen('crystal.png',confidence = 0.7,region=(660, 330+60*row, 60*6, 60)):
+        print('r',pos)
+        sleep(1)
+        x_loc = pyautogui.center(pos)[0]
+        for i in range(len(x_list)):
+            if x_loc < x_list[i]:
+                loc_x = i
+                A[row][loc_x]='r'
+                print(row, loc_x)
+                break
+for row in range(6):
+    for pos in pyautogui.locateAllOnScreen('black.png',confidence = 0.7,region=(660, 330+60*row, 60*6, 60)):
+        print('d',pos)
+        sleep(1)
+        x_loc = pyautogui.center(pos)[0]
+        for i in range(len(x_list)):
+            if x_loc < x_list[i]:
+                loc_x = i
+                A[row][loc_x]='d'
+                print(row, loc_x)
+                break
+for row in range(6):
+    for pos in pyautogui.locateAllOnScreen('wood.png',confidence = 0.7,region=(660, 330+60*row, 60*6, 60)):
+        print('w',pos)
+        sleep(1)
+        x_loc = pyautogui.center(pos)[0]
+        for i in range(len(x_list)):
+            if x_loc < x_list[i]:
+                loc_x = i
+                A[row][loc_x]='w'
+                print(row, loc_x)
+                break
+for row in range(6):
+    for pos in pyautogui.locateAllOnScreen('bomb.png',confidence = 0.7,region=(660, 330+60*row, 60*6, 60)):
+        print('p',pos)
+        sleep(1)
+        x_loc = pyautogui.center(pos)[0]
+        for i in range(len(x_list)):
+            if x_loc < x_list[i]:
+                A[row][i]='p'
+                print(row, loc_x)
+                break
+
+print('A',A)
+
+#用來獲取list中指定物件的索引值
+def get_index1(lst=None, item=''):
+    return [index for (index,value) in enumerate(lst) if value == item]
+# lst = ['A', 1, 4, 2, 'A', 3]
+# get_index1(lst, 'A')
+
+#當一行有三個以上相同的物件，判斷是否有連續三個時，這三個哪個差得比另兩個遠就回傳那一個
+def not_three(lst):
+    print(lst)
+    if lst[1]-lst[0] != 1 or lst[2]-lst[1]!= 1:
+        if(lst[2]-lst[1])<(lst[1]-lst[0]):
+            return lst[0], 0
+        else:
+            return lst[2], 2
+    else:
+        return 'three', 0
+
+
+from collections import Counter
+
+#A =  [['o', 'b', 'w', 'b', 'b', 'd'], ['y', 'o', 'o', 'b', 'y', 'o'], ['p', 'w', 'o', 'w', 'd', 'b'], ['y', 'o', 'w', 'o', 't', 'd'], ['w', 'd', 'y', 'd', 'o', 'w'], ['b', 'd', 'd', 'w', 'w', 'y']]
+#從A矩陣中一行一行跑，看哪一行有三個以上相同的物件
+for (index,lst) in enumerate(A):
+    b = dict(Counter(lst))
+    print({key: value for key, value in b.items() if value > 2})
+    double_list = [key for key, value in b.items() if value > 2]
+    if len(double_list)>0:
+        item = double_list[0]
+        if item==0:
+            if(len(double_list)>1):
+                item = double_list[1]
+            else:
+                pass
+        double_item_index = get_index1(lst, item)#有個話就紀錄下該物件的index
+        print(double_item_index)
+        move_item, move_index = not_three(double_item_index)
+        while move_item != 'three':#當不是連續三個時就由距離較遠的那個開始往中間走
+            print('change:',lst[move_item],move_item,index)
+            if move_index == 0:
+                lst[move_item],lst[move_item+1] = lst[move_item+1],lst[move_item]
+                change_in_game(index, move_item, move_item+1)
+            else:
+                lst[move_item], lst[move_item - 1] = lst[move_item - 1], lst[move_item]
+                change_in_game(index, move_item, move_item-1)
+            print(lst)
+            double_item_index = get_index1(lst, item)
+            move_item, move_index = not_three(double_item_index)
+        #break
+
+
+
+#用random選擇物件交換的方式玩遊戲，玩到第一天結束
+import random
+loc = pyautogui.locateCenterOnScreen('no.png')       # 偵測螢幕上是否有與 box.png 相同的圖片，若有 loc 將會被指派相同於圖片的地方的位置，若沒有 loc 會被指派為 None
+while loc == None:                              # 如果 loc 是 None (剛剛螢幕上沒找到相同的圖片) / 如果有找到，會直接跳過這個迴圈
+    rnd = random.randint(0, 5)
+    if(rnd!=5):
+        rnd2 = rnd + 1
+    else:
+        rnd2 = rnd - 1
+    change_in_game(random.randint(0, 5), rnd, rnd2)# 停 0.1 秒
+    if pyautogui.locateCenterOnScreen('night.png'):
+        print('night')
+        sleep(15)
+    loc = pyautogui.locateCenterOnScreen('no.png')
+
+pyautogui.click(loc)
+#點watchAD
+loc = pyautogui.locateCenterOnScreen('AD.png')   # 偵測螢幕上是否有與 box.png 相同的圖片，若有 loc 將會被指派相同於圖片的地方的位置，若沒有 loc 會被指派為 None
+while loc == None:                              # 如果 loc 是 None (剛剛螢幕上沒找到相同的圖片) / 如果有找到，會直接跳過這個迴圈
+    loc = pyautogui.locateCenterOnScreen('AD.png')
+pyautogui.moveTo(loc)
+pyautogui.mouseDown()
+time.sleep(0.5)
+pyautogui.mouseUp()
+#點continue or skipAD
+loc = pyautogui.locateCenterOnScreen('continue.png')       # 偵測螢幕上是否有與 box.png 相同的圖片，若有 loc 將會被指派相同於圖片的地方的位置，若沒有 loc 會被指派為 None
+while loc == None:                              # 如果 loc 是 None (剛剛螢幕上沒找到相同的圖片) / 如果有找到，會直接跳過這個迴圈
+    loc = pyautogui.locateCenterOnScreen('continue.png')
+    if loc == None:
+        loc = pyautogui.locateCenterOnScreen('skip_AD.png',confidence = 0.6)
+pyautogui.moveTo(loc)
+pyautogui.mouseDown()
+time.sleep(0.5)
+pyautogui.mouseUp()
+pyautogui.click(loc)
+
+#再一直玩到第二天死掉
+loc = pyautogui.locateCenterOnScreen('gameover.png')       # 偵測螢幕上是否有與 box.png 相同的圖片，若有 loc 將會被指派相同於圖片的地方的位置，若沒有 loc 會被指派為 None
+while loc == None:                              # 如果 loc 是 None (剛剛螢幕上沒找到相同的圖片) / 如果有找到，會直接跳過這個迴圈
+    rnd = random.randint(0, 5)
+    if(rnd!=5):
+        rnd2 = rnd + 1
+    else:
+        rnd2 = rnd - 1
+    change_in_game(random.randint(0, 5), rnd, rnd2)# 停 0.1 秒
+    if pyautogui.locateCenterOnScreen('night.png'):
+        print('night')
+        sleep(8)
+    loc = pyautogui.locateCenterOnScreen('gameover.png')
+
+
+
